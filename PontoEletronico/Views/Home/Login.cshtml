@@ -1,0 +1,19 @@
+﻿@model PontoEletronico.Models.LoginModel
+
+@{
+    ViewBag.Title = "Login";
+}
+
+@using (Html.BeginForm("Login", "Login", FormMethod.Post))
+{
+    <div class="mb-3">
+        <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário">
+        @Html.ValidationMessageFor(x => x.userID)
+    </div>
+    <div class="mb-3">
+        <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha">
+        @Html.ValidationMessageFor(x => x.accessKey)
+    </div>
+
+    <button type="submit" class="btn btn-primary">Login</button>
+}
