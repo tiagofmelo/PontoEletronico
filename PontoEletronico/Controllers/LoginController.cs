@@ -25,12 +25,11 @@ namespace PontoEletronico.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    {
-                        string serializeObject = responsePost(loginModel, "Accounts");
-                        TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
+                    string serializeObject = responsePost(loginModel, "Accounts");
 
-                        HttpContext.Response.SetCookie(PontoEletronico.Session.Session.ArmazenaToken(post));
-                    }
+                    TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
+
+                    HttpContext.Response.SetCookie(PontoEletronico.Session.Session.ArmazenaToken(post));
 
                     return RedirectToAction("Index", "Home");
                 }

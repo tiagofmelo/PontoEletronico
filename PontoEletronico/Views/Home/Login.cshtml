@@ -4,15 +4,46 @@
     ViewBag.Title = "Login";
 }
 
-<form action="/Login/Login" method="post">
-    <div class="form-group">
-        <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário">
-        @Html.ValidationMessageFor(x => x.userID)
+<div align="center">
+    <div class="box-login">
+        <img src="~/logo.png" class="logo" />
+        <form action="/Login/Login" method="post">
+            <div class="form-group">
+                <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário" required>
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha" required>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary button">LOGIN</button>
+            </div>
+        </form>
     </div>
-    <div class="form-group">
-        <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha">
-        @Html.ValidationMessageFor(x => x.accessKey)
-    </div>
+</div>
 
-    <button type="submit" class="btn btn-primary">Login</button>
-</form>
+<style>
+    .logo {
+        margin-bottom: 3em;
+    }
+
+    .box-login {
+        margin-top: 10em;
+        width: 20em;
+    }
+
+    .box-submit {
+        display: flex;
+        justify-content: left;
+    }
+
+    .button {
+        background-color: #fccd2a;
+        color: #1e5084;
+    }
+
+        .button:hover {
+            border-color: #FFFF;
+            background-color: #fccd2a;
+            color: #1e5084;
+        }
+</style>
