@@ -6,18 +6,22 @@
 
 <div align="center">
     <div class="box-login">
-        <img src="~/logo.png" class="logo" />
-        <form action="/Login/Login" method="post">
-            <div class="form-group">
-                <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário" required>
-            </div>
-            <div class="form-group">
-                <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha" required>
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary button">LOGIN</button>
-            </div>
-        </form>
+        <div>
+            <img src="~/logo.png" class="logo" />
+            <form action="/Login/Login" method="post">
+                <div class="form-group box">
+                    <i class="glyphicon glyphicon-user icon" aria-hidden="true"></i>
+                    <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário" required>
+                </div>
+                <div class="form-group box">
+                    <i class="glyphicon glyphicon-eye-close icon" aria-hidden="true"></i>
+                    <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha" required>
+                </div>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary button">LOGIN</button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
@@ -46,4 +50,15 @@
             background-color: #fccd2a;
             color: #1e5084;
         }
+
+    .box {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon {
+        color: #fccd2a;
+        margin-right: 1em;
+        font-size: 1.2em;
+    }
 </style>
