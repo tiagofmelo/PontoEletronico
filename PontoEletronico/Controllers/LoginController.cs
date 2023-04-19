@@ -25,13 +25,18 @@ namespace PontoEletronico.Controllers
                 {
                     if (ModelState.IsValid)
                     {
-                        string serializeObject = APIService.PostAPI(loginModel, "Accounts");
+                        var response = APIService.PostAPI(loginModel, "Accounts");
 
-                        TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            string serializeObject = response.Content.ReadAsStringAsync().Result;
 
-                        Response.AppendCookie(PontoEletronico.Session.Session.ArmazenaToken(post));
+                            TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
 
-                        return RedirectToAction("Index", "Home");
+                            Response.AppendCookie(PontoEletronico.Session.Session.ArmazenaToken(post));
+
+                            return RedirectToAction("Index", "Home");
+                        }
                     }
                     return RedirectToAction("Login", "Home");
                 }

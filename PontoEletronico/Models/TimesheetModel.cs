@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using Microsoft.Ajax.Utilities;
 
 namespace PontoEletronico.Models
 {
@@ -13,35 +14,27 @@ namespace PontoEletronico.Models
         public DateTime startLunch { get; set; }
         public DateTime endLunch { get; set; }
         public DateTime end { get; set; }
-        public string date
+        public DateTime totalTime
         {
             get
             {
-                if (start.Ticks == 0)
-                    return string.Empty;
+                long totalTime;
 
-                return start.ToString("d");
-            }
-        }
-        public string totalTime
-        {
-            get
-            {
-                TimeSpan totalTime;
-
-                if (start.Ticks == 0)
-                    return string.Empty;
+                //if (start.Ticks == 0)
+                //    return string.Empty;
 
                 if (end.Ticks == 0)
                 {
-                    totalTime = DateTime.Now.Subtract(start);
+                    totalTime =  DateTime.Now.Subtract(start).Ticks;
                 }
                 else
                 {
-                    totalTime = end.Subtract(start);
+                    totalTime = end.Subtract(start).Ticks;
                 }
 
-                return String.Format("{0:t}", totalTime);
+                DateTime dateTime = new DateTime(totalTime);
+                //return String.Format("{0:t}", totalTime);
+                return dateTime;
             }
         }
     }

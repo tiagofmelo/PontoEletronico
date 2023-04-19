@@ -29,5 +29,27 @@ namespace PontoEletronico.Session
 
             return tokenModel;
         }
+
+        public static HttpCookie ArmazenaTimesheet(TimesheetModel timesheetModel)
+        {
+            HttpCookie httpCookie = new HttpCookie("timesheetModel");
+
+            var sessionTimesheet = JsonConvert.SerializeObject(timesheetModel);
+
+            //httpCookie.Expires = DateTime.Now.AddTicks(tokenModel.expiresIn);
+            httpCookie.HttpOnly = true;
+            httpCookie.Value = sessionTimesheet;
+
+            return httpCookie;
+        }
+
+        public static TimesheetModel RetornaTimesheet(HttpCookie httpCookie)
+        {
+            TimesheetModel timesheetModel = new TimesheetModel();
+
+            timesheetModel = JsonConvert.DeserializeObject<TimesheetModel>(httpCookie.Value);
+
+            return timesheetModel;
+        }
     }
 }

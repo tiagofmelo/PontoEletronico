@@ -5,14 +5,32 @@
 }
 
 <div align="center">
-    <div class="box-header">
-        <div style="float: left;">
-            <img src="~/logo.png" class="logo" />
+    @using (Html.BeginForm("LogOut", "Home", FormMethod.Post))
+    {
+        <div class="box-header">
+            <div style="float: left;">
+                <button class="button-exit" type="submit">
+                    <img src="~/logo.png" class="logo" />
+                </button>
+                @{
+                    var httpCookie = Request.Cookies["tokenModel"];
+                    if (httpCookie != null)
+                    {
+                        var obj = Newtonsoft.Json.JsonConvert.DeserializeObject<PontoEletronico.Models.TokenModel>(httpCookie.Value);
+
+                        <div>
+                            <p id="welcome">
+                                Olá, @obj.name!
+                            </p>
+                        </div>
+                    }
+                }
+            </div>
+            <div style="float: right;">
+                <button type="submit" class="glyphicon glyphicon-remove-sign button-exit" aria-hidden="true"></button>
+            </div>
         </div>
-        <div style="float: right;">
-            <button class="glyphicon glyphicon-remove-sign button-exit" aria-hidden="true"></button>
-        </div>
-    </div>
+    }
     <div class="box-time">
         <div>
             <p id="time"></p>
@@ -22,20 +40,23 @@
             <p id="totalTime"></p>
         </div>
     </div>
-    <div class="box-button">
-        <div class="">
-            <button type="submit" class="btn btn-primary button">CHEGUEI</button>
+    @using (Html.BeginForm("Update", "Home", FormMethod.Post))
+    {
+        <div class="box-button">
+            <div class="">
+                <button type="submit" class="btn btn-primary button" name="evento" id="1" value="1">CHEGUEI</button>
+            </div>
+            <div class="">
+                <button type="submit" class="btn btn-primary button" name="evento" id="2" value="2">FUI ALMOÇAR</button>
+            </div>
+            <div class="">
+                <button type="submit" class="btn btn-primary button" name="evento" id="3" value="3">VOLTEI</button>
+            </div>
+            <div class="">
+                <button type="submit" class="btn btn-primary button" name="evento" id="4" value="4">FUI</button>
+            </div>
         </div>
-        <div class="">
-            <button type="submit" class="btn btn-primary button">FUI ALMOÇAR</button>
-        </div>
-        <div class="">
-            <button type="submit" class="btn btn-primary button">VOLTEI</button>
-        </div>
-        <div class="">
-            <button type="submit" class="btn btn-primary button">FUI</button>
-        </div>
-    </div>
+    }
 </div>
 
 <div class="table-box">
@@ -52,12 +73,12 @@
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.date)</td>
-                <td>@Html.DisplayFor(modelItem => item.start)</td>
-                <td>@Html.DisplayFor(modelItem => item.startLunch)</td>
-                <td>@Html.DisplayFor(modelItem => item.endLunch)</td>
-                <td>@Html.DisplayFor(modelItem => item.end)</td>
-                <td>@Html.DisplayFor(modelItem => item.totalTime)</td>
+                <td>@Html.DisplayFor(modelItem => item.start).ToString().Substring(0, 10)</td>
+                <td>@Html.DisplayFor(modelItem => item.start).ToString().Substring(10, 9)</td>
+                <td>@Html.DisplayFor(modelItem => item.startLunch).ToString().Substring(10, 9)</td>
+                <td>@Html.DisplayFor(modelItem => item.endLunch).ToString().Substring(10, 9)</td>
+                <td>@Html.DisplayFor(modelItem => item.end).ToString().Substring(10, 9)</td>
+                <td>@Html.DisplayFor(modelItem => item.totalTime).ToString().Substring(10, 9)</td>
             </tr>
         }
     </table>
@@ -124,6 +145,11 @@
         border-color: #1e5084;
     }
 
+    #welcome {
+        font-size: 1.5em;
+        color: #ffff;
+    }
+
     #time {
         font-size: 1.5em;
         color: #ffff;
@@ -139,13 +165,19 @@
     var timeDisplay = document.getElementById("time");
     var totalTime = document.getElementById("totalTime");
 
+    var totalTimeCount = new Date('@Model.OrderBy(x => x.id).Last().totalTime.ToString("O")');
+
     function refreshTime() {
         var now = new Date();
         var dateStringNow = now.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
         var formattedStringNow = dateStringNow.replace(",", " ");
 
+        totalTimeCount.setSeconds(totalTimeCount.getSeconds() + 1);
+        var dateStringTotal = totalTimeCount.toLocaleString("pt-BR", { timeZone: "America/Sao_Paulo" });
+        var formattedStringTotal = dateStringTotal.substring(9,18);
+
         timeDisplay.innerHTML = formattedStringNow;
-        totalTime.innerHTML = 'Tempo ' + '@Model.LastOrDefault().totalTime';
+        totalTime.innerHTML = 'Tempo ' + formattedStringTotal;
     }
 
     setInterval(refreshTime, 1000);
