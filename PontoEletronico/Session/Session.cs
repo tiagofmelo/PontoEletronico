@@ -14,6 +14,8 @@ namespace PontoEletronico.Session
 
             var sessionToken = JsonConvert.SerializeObject(tokenModel);
 
+            //httpCookie.Expires = DateTime.Now.AddTicks(tokenModel.expiresIn);
+            httpCookie.HttpOnly = true;
             httpCookie.Value = sessionToken;
 
             return httpCookie;
@@ -23,7 +25,7 @@ namespace PontoEletronico.Session
         {
             TokenModel tokenModel = new TokenModel();
 
-            tokenModel = JsonConvert.DeserializeObject<TokenModel>(httpCookie["tokenModel"]);
+            tokenModel = JsonConvert.DeserializeObject<TokenModel>(httpCookie.Value);
 
             return tokenModel;
         }

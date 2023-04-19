@@ -27,7 +27,6 @@ namespace PontoEletronico.Models
         {
             get
             {
-                
                 TimeSpan totalTime;
 
                 if (start.Ticks == 0)
