@@ -8,7 +8,7 @@
     @using (Html.BeginForm("LogOut", "Home", FormMethod.Post))
     {
         <div class="box-header">
-            <div style="float: left;">
+            <div class="box-img">
                 <button class="button-exit" type="submit">
                     <img src="~/logo.png" class="logo" />
                 </button>
@@ -91,6 +91,12 @@
         padding-bottom: 5em;
     }
 
+    .box-img {
+        display: flex;
+        float: left;
+        align-items: baseline;
+    }
+
     .box-time {
         display: flex;
         justify-content: center;
@@ -108,6 +114,7 @@
         font-size: 2.5em;
         background-color: #1e5084;
         border: none;
+        margin-right: 3em;
     }
 
     .button {
