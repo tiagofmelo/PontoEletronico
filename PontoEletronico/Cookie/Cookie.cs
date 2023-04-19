@@ -6,7 +6,7 @@ using PontoEletronico.Models;
 
 namespace PontoEletronico.Session
 {
-    public static class Session
+    public static class Cookie
     {
         public static HttpCookie ArmazenaToken(TokenModel tokenModel)
         {

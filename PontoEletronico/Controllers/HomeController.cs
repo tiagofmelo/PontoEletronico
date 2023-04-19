@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using Newtonsoft.Json;
 using PontoEletronico.Models;
 using PontoEletronico.Service;
@@ -20,7 +19,7 @@ namespace PontoEletronico.Controllers
             {
                 if (Request.Cookies["tokenModel"] != null)
                 {
-                    TokenModel tokenModel = PontoEletronico.Session.Session.RetornaToken(Request.Cookies["tokenModel"]);
+                    TokenModel tokenModel = PontoEletronico.Session.Cookie.RetornaToken(Request.Cookies["tokenModel"]);
 
                     var response = APIService.GetAPI(tokenModel, "Timesheet");
 
@@ -32,7 +31,7 @@ namespace PontoEletronico.Controllers
 
                         timesheetModels.AddRange(pagination.items);
 
-                        Response.AppendCookie(PontoEletronico.Session.Session.ArmazenaTimesheet(pagination.items.OrderByDescending(x => x.id).FirstOrDefault()));
+                        Response.AppendCookie(PontoEletronico.Session.Cookie.ArmazenaTimesheet(pagination.items.OrderByDescending(x => x.id).FirstOrDefault()));
                     }
 
                     return View(timesheetModels);
@@ -48,17 +47,16 @@ namespace PontoEletronico.Controllers
 
         public ActionResult Login()
         {
-            if (Request.Cookies["tokenModel"] == null)
-            {
-                return View();
-            }
-            return RedirectToAction("Index", "Home");
+            return View();
         }
 
         [HttpPost]
         public ActionResult LogOut()
         {
-            Request.Cookies.Clear();
+            Response.Cookies.Remove("tokenModel");
+            Request.Cookies.Remove("tokenModel");
+            Response.Cookies.Remove("timesheetModel");
+            Request.Cookies.Remove("timesheetModel");
 
             return RedirectToAction("Login", "Home");
         }
@@ -70,8 +68,8 @@ namespace PontoEletronico.Controllers
             {
                 if (Request.Form["evento"] != null && Request.Cookies["tokenModel"] != null)
                 {
-                    TokenModel tokenModel = PontoEletronico.Session.Session.RetornaToken(Request.Cookies["tokenModel"]);
-                    TimesheetModel timesheetModel = PontoEletronico.Session.Session.RetornaTimesheet(Request.Cookies["timesheetModel"]);
+                    TokenModel tokenModel = PontoEletronico.Session.Cookie.RetornaToken(Request.Cookies["tokenModel"]);
+                    TimesheetModel timesheetModel = PontoEletronico.Session.Cookie.RetornaTimesheet(Request.Cookies["timesheetModel"]);
 
                     switch (Request.Form["evento"])
                     {

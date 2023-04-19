@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Net;
 using System.Web.Mvc;
 using PontoEletronico.Models;
-using PontoEletronico.Session;
-using System.Text;
-using System.IO;
 using Newtonsoft.Json;
 using PontoEletronico.Service;
 
@@ -33,7 +29,7 @@ namespace PontoEletronico.Controllers
 
                             TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
 
-                            Response.AppendCookie(PontoEletronico.Session.Session.ArmazenaToken(post));
+                            Response.AppendCookie(PontoEletronico.Session.Cookie.ArmazenaToken(post));
 
                             return RedirectToAction("Index", "Home");
                         }

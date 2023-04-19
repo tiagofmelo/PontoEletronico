@@ -127,8 +127,7 @@
     </Compile>
     <Compile Include="Models\TimesheetModel.cs" />
     <Compile Include="Service\APIService.cs" />
-    <Compile Include="Session\ISession.cs" />
-    <Compile Include="Session\Session.cs" />
+    <Compile Include="Cookie\Cookie.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\TokenModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

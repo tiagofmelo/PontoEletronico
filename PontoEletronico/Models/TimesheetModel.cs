@@ -18,23 +18,27 @@ namespace PontoEletronico.Models
         {
             get
             {
-                long totalTime;
-
-                //if (start.Ticks == 0)
-                //    return string.Empty;
-
-                if (end.Ticks == 0)
+                try
                 {
-                    totalTime =  DateTime.Now.Subtract(start).Ticks;
-                }
-                else
-                {
-                    totalTime = end.Subtract(start).Ticks;
-                }
+                    long totalTime;
 
-                DateTime dateTime = new DateTime(totalTime);
-                //return String.Format("{0:t}", totalTime);
-                return dateTime;
+                    if (end.Ticks == 0)
+                    {
+                        totalTime = DateTime.Now.Subtract(start).Ticks;
+                    }
+                    else
+                    {
+                        totalTime = end.Subtract(start).Ticks;
+                    }
+
+                    DateTime dateTime = new DateTime(totalTime);
+
+                    return dateTime;
+                }
+                catch 
+                {
+                    return DateTime.MinValue;
+                }
             }
         }
     }
