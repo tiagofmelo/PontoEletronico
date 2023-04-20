@@ -17,26 +17,23 @@ namespace PontoEletronico.Controllers
         {
             try
             {
-                if (Request.Cookies["tokenModel"] == null)
+                if (ModelState.IsValid)
                 {
-                    if (ModelState.IsValid)
+                    var response = APIService.PostAPI(loginModel, "Accounts");
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        var response = APIService.PostAPI(loginModel, "Accounts");
+                        string serializeObject = response.Content.ReadAsStringAsync().Result;
 
-                        if (response.IsSuccessStatusCode)
-                        {
-                            string serializeObject = response.Content.ReadAsStringAsync().Result;
+                        TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
 
-                            TokenModel post = JsonConvert.DeserializeObject<TokenModel>(serializeObject);
+                        Response.AppendCookie(PontoEletronico.Session.Cookie.ArmazenaToken(post));
 
-                            Response.AppendCookie(PontoEletronico.Session.Cookie.ArmazenaToken(post));
-
-                            return RedirectToAction("Index", "Home");
-                        }
+                        return RedirectToAction("Index", "Home");
                     }
-                    return RedirectToAction("Login", "Home");
+                    TempData["MensagemErro"] = "Usuário ou senha inválido.";
                 }
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Login", "Home");
             }
             catch (Exception erro)
             {

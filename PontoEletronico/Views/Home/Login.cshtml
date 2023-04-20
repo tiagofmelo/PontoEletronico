@@ -5,16 +5,30 @@
 }
 
 <div align="center">
+    @if (TempData["MensagemSucesso"] != null)
+    {
+        <div class="alert alert-success" role="alert">
+            @TempData["MensagemSucesso"]
+        </div>
+    }
+
+    @if (TempData["MensagemErro"] != null)
+    {
+        <div class="alert alert-danger" role="alert">
+            @TempData["MensagemErro"]
+        </div>
+    }
+
     <div class="box-login">
         <div>
-            <img src="~/logo.png" class="logo" />
+            <img src="~/Icons/logo.png" class="logo" />
             <form action="/Login/Login" method="post">
                 <div class="form-group box">
-                    <i class="glyphicon glyphicon-user icon" aria-hidden="true"></i>
+                    <img src="~/Icons/user.png" class="icon" />
                     <input type="text" class="form-control" id="userID" name="userID" placeholder="Usuário" required>
                 </div>
                 <div class="form-group box">
-                    <i class="glyphicon glyphicon-eye-close icon" aria-hidden="true"></i>
+                    <img src="~/Icons/key.png" class="icon" />
                     <input type="password" class="form-control" id="accessKey" name="accessKey" placeholder="Senha" required>
                 </div>
                 <div class="form-group">
@@ -51,14 +65,19 @@
             color: #1e5084;
         }
 
+        .button:focus {
+            border-color: #1e5084;
+            background-color: #fccd2a;
+            color: #1e5084;
+        }
+
     .box {
         display: flex;
         align-items: center;
     }
 
     .icon {
-        color: #fccd2a;
-        margin-right: 1em;
-        font-size: 1.2em;
+        margin-right: 0.5em;
+        height: 2em;
     }
 </style>

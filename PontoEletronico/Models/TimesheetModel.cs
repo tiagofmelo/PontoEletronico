@@ -22,13 +22,21 @@ namespace PontoEletronico.Models
                 {
                     long totalTime;
 
-                    if (end.Ticks == 0)
+                    if (end.Ticks > 0)
                     {
-                        totalTime = DateTime.Now.Subtract(start).Ticks;
+                        totalTime = end.Subtract(start).Ticks;
+                    }
+                    else if (endLunch.Ticks > 0)
+                    {
+                        totalTime = endLunch.Subtract(start).Ticks;
+                    }
+                    else if (startLunch.Ticks > 0)
+                    {
+                        totalTime = startLunch.Subtract(start).Ticks;
                     }
                     else
                     {
-                        totalTime = end.Subtract(start).Ticks;
+                        totalTime = DateTime.MinValue.Ticks;
                     }
 
                     DateTime dateTime = new DateTime(totalTime);

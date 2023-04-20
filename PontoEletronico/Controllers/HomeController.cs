@@ -82,9 +82,10 @@ namespace PontoEletronico.Controllers
                             var response = APIService.PostAPI(tokenModel, "Timesheet", newTimesheet);
 
                             if (response.IsSuccessStatusCode)
-                            {
-                                var serializeObject = response.Content.ReadAsStringAsync().Result;
-                            }
+                                TempData["MensagemSucesso"] = "Registro efetuado com sucesso!";
+                            else
+                                TempData["MensagemErro"] = "Erro ao efetuar o registro!";
+
                             break;
                         case "2":
                             timesheetModel.startLunch = DateTime.Now;
@@ -92,9 +93,10 @@ namespace PontoEletronico.Controllers
                             response = APIService.PutAPI(tokenModel, "Timesheet", timesheetModel);
 
                             if (response.IsSuccessStatusCode)
-                            {
-                                var serializeObject = response.Content.ReadAsStringAsync().Result;
-                            }
+                                TempData["MensagemSucesso"] = "Registro efetuado com sucesso!";
+                            else
+                                TempData["MensagemErro"] = "Erro ao efetuar o registro!";
+
                             break;
                         case "3":
                             timesheetModel.endLunch = DateTime.Now;
@@ -102,9 +104,10 @@ namespace PontoEletronico.Controllers
                             response = APIService.PutAPI(tokenModel, "Timesheet", timesheetModel);
 
                             if (response.IsSuccessStatusCode)
-                            {
-                                var serializeObject = response.Content.ReadAsStringAsync().Result;
-                            }
+                                TempData["MensagemSucesso"] = "Registro efetuado com sucesso!";
+                            else
+                                TempData["MensagemErro"] = "Erro ao efetuar o registro!";
+
                             break;
                         case "4":
                             timesheetModel.end = DateTime.Now;
@@ -112,9 +115,10 @@ namespace PontoEletronico.Controllers
                             response = APIService.PutAPI(tokenModel, "Timesheet", timesheetModel);
 
                             if (response.IsSuccessStatusCode)
-                            {
-                                var serializeObject = response.Content.ReadAsStringAsync().Result;
-                            }
+                                TempData["MensagemSucesso"] = "Registro efetuado com sucesso!";
+                            else
+                                TempData["MensagemErro"] = "Erro ao efetuar o registro!";
+
                             break;
                     }
                     return RedirectToAction("Index", "Home");
